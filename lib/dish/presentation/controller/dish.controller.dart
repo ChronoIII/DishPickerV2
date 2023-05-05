@@ -1,17 +1,19 @@
-import 'package:dishv3/dish/presentation/providers/dish.provider.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../presentation/providers/dish.provider.dart';
 import '../../domain/repositories/dish.repository.dart';
 import '../../domain/usecases/randomize-dish.usecase.dart';
 
 class DishController {
   final Ref ref;
-  late DishRepository _dishRepository;
+  late DishRepository dishRepository;
   late RandomizeDish _randomizeDish;
 
   DishController(this.ref) {
-    _dishRepository = ref.read(dishRepositoryProvider);
-    _randomizeDish = RandomizeDish(_dishRepository);
+    dishRepository = ref.read(dishRepositoryProvider);
+
+    // Use cases
+    _randomizeDish = RandomizeDish(dishRepository);
   }
 
   Future<void> randomizeDish() async {
@@ -19,7 +21,7 @@ class DishController {
     response.fold(
       (left) {},
       (right) {
-        print('test');
+        ref.watch(selectedDishProvider.notifier).state = right;
       },
     );
   }
