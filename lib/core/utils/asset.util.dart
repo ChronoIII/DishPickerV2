@@ -1,16 +1,18 @@
 import 'dart:convert';
-
 import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
 
 import '../values/asset.values.dart';
-import 'package:flutter/material.dart';
 
 class AssetUtil {
   AssetUtil();
 
-  static AssetImage getImage(String filename) {
+  static Image getImage(String filename, {int scaleMulitplier = 1}) {
     var fullPath = '$imageAssetPath/$filename';
-    return AssetImage(fullPath);
+    return Image.asset(
+      fullPath,
+      scale: 1.0 / scaleMulitplier,
+    );
   }
 
   static Future<List<dynamic>> getJson(String filename) async {
