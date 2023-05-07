@@ -11,7 +11,7 @@ class ChatGptUtil {
 
   ChatGptUtil();
 
-  Future<Choices?> request(String prompt) async {
+  Future<Choices?> requestText(String prompt) async {
     try {
       final request = CompleteText(
         prompt: prompt,
@@ -26,18 +26,31 @@ class ChatGptUtil {
     return null;
   }
 
+  Future<String?> requestImage(String prompt) async {
+    var request = GenerateImage(
+      prompt,
+      1,
+      size: ImageSize.size256,
+      responseFormat: Format.url,
+    );
+
+    var response = await _instance.generateImage(request);
+
+    return response?.data?.first?.url;
+  }
+
   Future<String> askQuestion(String prompt,
       {String result = '', int tries = 0}) async {
     if (tries >= 5) {
       return result;
     }
-    Choices? choiceResponse = await request(prompt);
+    Choices? choiceResponse = await requestText(prompt);
     result += choiceResponse!.text;
     tries += 1;
 
     if (choiceResponse!.finishReason != 'stop') {
       var tempPrompt = result += '@keep going';
-      result += await askQuestion(tempPrompt, result: result, tries: tries);
+      return await askQuestion(tempPrompt, result: result, tries: tries);
     }
     return result;
   }

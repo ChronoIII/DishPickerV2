@@ -2,31 +2,37 @@
     {
         "dishName": "sinigang na baboy",
         "dishIconPath": "gadgag",
-        "dishRecipeUrl": "gaadgds"
+        "dishRecipeUrl": "gaadgds",
+        "dishLocation": "Philippines"
     },
     {
         "dishName": "adobong baboy",
         "dishIconPath": "gadgad",
-        "dishRecipeUrl": "gadgdsg"
+        "dishRecipeUrl": "gadgdsg",
+        "dishLocation": "Philippines"
     },
     {
         "dishName": "spagetti",
         "dishIconPath": "gad",
-        "dishRecipeUrl": "agdgadsgds"
+        "dishRecipeUrl": "agdgadsgds",
+        "dishLocation": "Mexico"
     },
     {
         "dishName": "fried chicken",
         "dishIconPath": "gdsagsd",
-        "dishRecipeUrl": "gadsgdsagasd"
+        "dishRecipeUrl": "gadsgdsagasd",
+        "dishLocation": ""
     },
     {
         "dishName": "menudo",
         "dishIconPath": "gdag",
-        "dishRecipeUrl": "agadsgds"
+        "dishRecipeUrl": "agadsgds",
+        "dishLocation": "Philippines"
     },
     {
         "dishName": "omelette",
         "dishIconPath": "gadsg",
-        "dishRecipeUrl": "adgdsgd"
+        "dishRecipeUrl": "adgdsgd",
+        "dishLocation": ""
     }
 ]

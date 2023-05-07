@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:dishv3/core/utils/chat-gpt.util.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -18,8 +20,7 @@ class DishController {
   }
 
   Future<void> randomizeDish() async {
-    ChatGptUtil().test('what is the recipe for menudo');
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 5));
 
     var response = await _randomizeDish();
     response.fold(
@@ -28,5 +29,15 @@ class DishController {
         ref.watch(selectedDishProvider.notifier).state = right;
       },
     );
+  }
+
+  Future<void> getCuisineRecipe() async {
+    var selectedDish = ref.watch(selectedDishProvider);
+    print(await ChatGptUtil().askQuestion(
+      'what is the recipe for ${selectedDish?.dishName} ${selectedDish?.dishLocation}',
+    ));
+
+    // print(await ChatGptUtil().requestImage(
+    //     '${selectedDish?.dishName} ${selectedDish?.dishLocation}'));
   }
 }

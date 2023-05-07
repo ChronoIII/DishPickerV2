@@ -84,14 +84,12 @@ class _HomePageState extends ConsumerState<HomePage>
                     children: [
                       const SizedBox(height: 15.0),
                       TextButton(
-                        child: const Text('Check for Recipe Online'),
-                        onPressed: () {},
+                        child: const Text('Check for the Recipe'),
+                        onPressed: () async {
+                          await dishController.getCuisineRecipe();
+                        },
                       ),
                       const SizedBox(height: 15.0),
-                      TextButton(
-                        child: const Text('Ask GPT for Recipe'),
-                        onPressed: () {},
-                      ),
                     ],
                   ),
               ],
