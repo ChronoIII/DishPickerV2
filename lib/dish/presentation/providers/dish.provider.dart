@@ -8,6 +8,10 @@ final loadingDishProvider = StateProvider<bool>((ref) => false);
 
 final selectedDishProvider = StateProvider<DishEntity?>((ref) => null);
 
+final selectedIngredientsProvider = StateProvider<String?>((ref) => null);
+
+final selectedInstructionsProvider = StateProvider<String?>((ref) => null);
+
 final dishControllerProvider =
     StateProvider<DishController>((ref) => DishController(ref));
 

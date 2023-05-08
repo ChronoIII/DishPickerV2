@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../widgets/app-bar.core.widget.dart';
 
-class MainPageLayout extends StatelessWidget {
-  const MainPageLayout({
+class ScrollablePageLayout extends StatelessWidget {
+  const ScrollablePageLayout({
     super.key,
     required this.contents,
     this.containerPadding,
@@ -25,21 +25,14 @@ class MainPageLayout extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
         padding: EdgeInsets.all(containerPadding ?? 10.0),
-        // child: SingleChildScrollView(
-        //   child: Column(
-        //     mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.start,
-        //     crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.start,
-        //     children: [
-        //       ...contents,
-        //     ],
-        //   ),
-        // ),
-        child: Column(
-          mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.start,
-          crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.start,
-          children: [
-            ...contents,
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.start,
+            crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.start,
+            children: [
+              ...contents,
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: bottomTabmenu,

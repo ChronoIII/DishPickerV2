@@ -1,4 +1,4 @@
-import 'dart:js';
+import 'dart:convert';
 
 import 'package:dishv3/core/utils/chat-gpt.util.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -33,11 +33,20 @@ class DishController {
 
   Future<void> getCuisineRecipe() async {
     var selectedDish = ref.watch(selectedDishProvider);
-    print(await ChatGptUtil().askQuestion(
-      'what is the recipe for ${selectedDish?.dishName} ${selectedDish?.dishLocation}',
-    ));
+    var response = await dishRepository.getRecipe(selectedDish!);
 
-    // print(await ChatGptUtil().requestImage(
-    //     '${selectedDish?.dishName} ${selectedDish?.dishLocation}'));
+    response.fold(
+      (left) {},
+      (right) {
+        var encodedRecipe = json.encode(right);
+        var decodedRecipe = json.decode(encodedRecipe);
+
+        ref.watch(selectedIngredientsProvider.notifier).state =
+            decodedRecipe['ingredients'];
+
+        ref.watch(selectedInstructionsProvider.notifier).state =
+            decodedRecipe['instructions'];
+      },
+    );
   }
 }

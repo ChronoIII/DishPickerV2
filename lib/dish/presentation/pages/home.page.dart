@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../presentation/providers/dish.provider.dart';
@@ -86,7 +87,9 @@ class _HomePageState extends ConsumerState<HomePage>
                       TextButton(
                         child: const Text('Check for the Recipe'),
                         onPressed: () async {
-                          await dishController.getCuisineRecipe();
+                          await dishController.getCuisineRecipe().then(
+                                (value) => context.go('/recipe'),
+                              );
                         },
                       ),
                       const SizedBox(height: 15.0),

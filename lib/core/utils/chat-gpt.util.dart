@@ -48,8 +48,8 @@ class ChatGptUtil {
     result += choiceResponse!.text;
     tries += 1;
 
-    if (choiceResponse!.finishReason != 'stop') {
-      var tempPrompt = result += '@keep going';
+    if (choiceResponse.finishReason != 'stop') {
+      var tempPrompt = '$result@keep going';
       return await askQuestion(tempPrompt, result: result, tries: tries);
     }
     return result;

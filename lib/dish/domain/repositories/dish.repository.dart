@@ -5,4 +5,5 @@ import '../entities/dish.entity.dart';
 
 abstract class DishRepository {
   Future<Either<FailureException, DishEntity>> randomizeDish();
+  Future<Either<FailureException, Object>> getRecipe(DishEntity selectedDish);
 }
