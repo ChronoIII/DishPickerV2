@@ -21,7 +21,7 @@
         "dishName": "fried chicken",
         "dishIconPath": "gdsagsd",
         "dishRecipeUrl": "gadsgdsagasd",
-        "dishLocation": ""
+        "dishLocation": null
     },
     {
         "dishName": "menudo",
@@ -33,6 +33,6 @@
         "dishName": "omelette",
         "dishIconPath": "gadsg",
         "dishRecipeUrl": "adgdsgd",
-        "dishLocation": ""
+        "dishLocation": null
     }
 ]

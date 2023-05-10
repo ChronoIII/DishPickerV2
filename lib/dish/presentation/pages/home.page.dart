@@ -1,6 +1,7 @@
 import 'package:dishv3/dish/presentation/widgets/home-default.widget.dart';
 import 'package:dishv3/dish/presentation/widgets/home-selected.widget.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../presentation/providers/dish.provider.dart';
@@ -47,6 +48,14 @@ class _HomePageState extends ConsumerState<HomePage>
     return MainPageLayout(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
+      actionButtons: [
+        IconButton(
+          onPressed: () {
+            context.push('/list');
+          },
+          icon: const Icon(Icons.menu_book_outlined),
+        ),
+      ],
       contents: <Widget>[
         if (isRecipeLoading == true)
           AssetUtil.getImage('book.gif', scaleMulitplier: 2)

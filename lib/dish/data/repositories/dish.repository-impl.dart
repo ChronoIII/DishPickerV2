@@ -59,6 +59,21 @@ class DishRepositoryImpl implements DishRepository {
     }
   }
 
+  @override
+  Future<Either<FailureException, List<DishEntity>>> fetchDishList() async {
+    try {
+      var json = await AssetUtil.getJson('dish-list.json');
+
+      return Right(
+        json.map((data) => DishModel.fromJson(data)).toList(),
+      );
+    } catch (e) {
+      return Left(
+        FailureException(message: e.toString()),
+      );
+    }
+  }
+
   Object defineRecipe(DishEntity selectedDish, String fullRecipe) {
     var ingredientText = formatRecipe(
       fullRecipe.substring(

@@ -6,14 +6,16 @@ import '../../../core/extensions/text.extension.dart';
 import '../../presentation/providers/dish.provider.dart';
 
 class HomeSelectedWidget extends ConsumerWidget {
-  const HomeSelectedWidget({super.key, required this.parentContext});
+  const HomeSelectedWidget({
+    super.key,
+    required this.parentContext,
+  });
 
   final BuildContext parentContext;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedDish = ref.watch(selectedDishProvider);
-    final dishController = ref.read(dishControllerProvider);
 
     return Column(
       children: [
@@ -33,10 +35,11 @@ class HomeSelectedWidget extends ConsumerWidget {
         const SizedBox(height: 15.0),
         TextButton(
           child: const Text('Check for the Recipe'),
-          onPressed: () async {
-            await dishController.getCuisineRecipe().then(
-                  (value) => parentContext.go('/recipe'),
-                );
+          onPressed: () {
+            // await dishController.getCuisineRecipe().then(
+            //       (value) => parentContext.push('/recipe'),
+            //     );
+            context.push('/recipe');
           },
         ),
         const SizedBox(height: 15.0),
