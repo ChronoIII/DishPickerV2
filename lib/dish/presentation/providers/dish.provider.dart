@@ -6,6 +6,8 @@ import '../../domain/repositories/dish.repository.dart';
 
 final loadingDishProvider = StateProvider<bool>((ref) => false);
 
+final loadingRecipeProvider = StateProvider<bool>((ref) => false);
+
 final selectedDishProvider = StateProvider<DishEntity?>((ref) => null);
 
 final selectedIngredientsProvider = StateProvider<String?>((ref) => null);

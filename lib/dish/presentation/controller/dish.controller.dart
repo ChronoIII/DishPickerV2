@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:dishv3/core/utils/chat-gpt.util.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../presentation/providers/dish.provider.dart';
@@ -20,6 +19,8 @@ class DishController {
   }
 
   Future<void> randomizeDish() async {
+    ref.watch(selectedDishProvider.notifier).state = null;
+
     await Future.delayed(const Duration(seconds: 5));
 
     var response = await _randomizeDish();
@@ -32,11 +33,15 @@ class DishController {
   }
 
   Future<void> getCuisineRecipe() async {
+    ref.watch(loadingRecipeProvider.notifier).state = true;
+
     var selectedDish = ref.watch(selectedDishProvider);
     var response = await dishRepository.getRecipe(selectedDish!);
 
     response.fold(
-      (left) {},
+      (left) {
+        ref.watch(loadingRecipeProvider.notifier).state = true;
+      },
       (right) {
         var encodedRecipe = json.encode(right);
         var decodedRecipe = json.decode(encodedRecipe);
@@ -46,6 +51,8 @@ class DishController {
 
         ref.watch(selectedInstructionsProvider.notifier).state =
             decodedRecipe['instructions'];
+
+        ref.watch(loadingRecipeProvider.notifier).state = false;
       },
     );
   }

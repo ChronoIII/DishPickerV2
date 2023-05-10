@@ -1,4 +1,4 @@
 const String appTitle = 'Dish Simulator 8000';
 
 const String openAiToken =
-    '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';
+    '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';

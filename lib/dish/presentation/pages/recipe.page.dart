@@ -68,9 +68,9 @@ class _RecipePageState extends ConsumerState<RecipePage> {
           ),
         ),
         if (_selectedIndex == 0)
-          Text(recipeIngredients!)
+          Text(recipeIngredients ?? '')
         else if (_selectedIndex == 1)
-          Text(recipeInstructions!)
+          Text(recipeInstructions ?? '')
       ],
     );
   }
