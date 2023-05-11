@@ -3,10 +3,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../core/layout/scrollable-page.layout.dart';
 import '../../../core/utils/asset.util.dart';
-import '../../domain/entities/dish.entity.dart';
 import '../../../core/extensions/text.extension.dart';
 import '../../presentation/providers/dish.provider.dart';
-import '../controller/dish.controller.dart';
+import '../../../core/layout/main-page.layout.dart';
 
 class RecipePage extends ConsumerStatefulWidget {
   const RecipePage({super.key});
@@ -17,14 +16,10 @@ class RecipePage extends ConsumerStatefulWidget {
 
 class _RecipePageState extends ConsumerState<RecipePage> {
   int _selectedIndex = 0;
-  late DishController dishController;
 
   @override
   void initState() {
     super.initState();
-    dishController = ref.read(dishControllerProvider);
-
-    dishController.getCuisineRecipe();
   }
 
   @override
@@ -34,71 +29,84 @@ class _RecipePageState extends ConsumerState<RecipePage> {
 
   @override
   Widget build(BuildContext context) {
-    // final dishController = ref.read(dishControllerProvider);
     final selectedDish = ref.watch(selectedDishProvider);
+    final selectedRecipe = ref.watch(selectedRecipeProvider);
 
-    final isRecipeLoading = ref.watch(loadingRecipeProvider);
-    final recipeIngredients = ref.watch(selectedIngredientsProvider);
-    final recipeInstructions = ref.watch(selectedInstructionsProvider);
-
-    return ScrollablePageLayout(
-      bottomTabmenu: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.shopping_basket_outlined,
-            ),
-            label: 'Ingredients',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.collections_bookmark_rounded,
-            ),
-            label: 'Instructions',
-          ),
+    return selectedRecipe.when(
+      error: (e, _) => MainPageLayout(
+        contents: [
+          Text(e.toString()),
         ],
-        currentIndex: _selectedIndex,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
       ),
-      contents: <Widget>[
-        if (isRecipeLoading == true)
-          AssetUtil.getImage('book.gif', scaleMulitplier: 2)
-        else
-          Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.sync_outlined,
-                      size: 30.0,
-                      color: Colors.teal,
+      loading: () {
+        return MainPageLayout(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          contents: [
+            AssetUtil.getImage('book.gif', scaleMulitplier: 2),
+          ],
+        );
+      },
+      data: (data) {
+        return ScrollablePageLayout(
+          bottomTabmenu: BottomNavigationBar(
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.shopping_basket_outlined,
+                ),
+                label: 'Ingredients',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.collections_bookmark_rounded,
+                ),
+                label: 'Instructions',
+              ),
+            ],
+            currentIndex: _selectedIndex,
+            onTap: (index) {
+              setState(() {
+                _selectedIndex = index;
+              });
+            },
+          ),
+          contents: <Widget>[
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.sync_outlined,
+                        size: 30.0,
+                        color: Colors.teal,
+                      ),
+                    ),
+                  ],
+                ),
+                Center(
+                  child: Text(
+                    selectedDish!.dishName.capitalize(),
+                    style: const TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ],
-              ),
-              Center(
-                child: Text(
-                  selectedDish!.dishName.capitalize(),
-                  style: const TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
                 ),
-              ),
-              if (_selectedIndex == 0)
-                Text(recipeIngredients ?? '')
-              else if (_selectedIndex == 1)
-                Text(recipeInstructions ?? '')
-            ],
-          )
-      ],
+                if (_selectedIndex == 0)
+                  Text(data['ingredients'] ?? '')
+                else if (_selectedIndex == 1)
+                  Text(data['instructions'] ?? '')
+              ],
+            )
+          ],
+        );
+      },
     );
   }
 }

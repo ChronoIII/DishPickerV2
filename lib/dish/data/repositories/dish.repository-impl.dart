@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:dartz/dartz.dart';
@@ -30,18 +31,16 @@ class DishRepositoryImpl implements DishRepository {
   Future<Either<FailureException, Object>> getRecipe(
       DishEntity selectedDish) async {
     try {
-      var ingredientsKey = '${selectedDish.dishName}.ingredients';
-      var instructionsKey = '${selectedDish.dishName}.instructions';
+      var recipeKey = '${selectedDish.dishName}.recipe';
 
-      String? ingredientsCache =
-          await SecureStorageUtil().getFromStorage(ingredientsKey);
-      String? instructionsCache =
-          await SecureStorageUtil().getFromStorage(instructionsKey);
+      String? recipeCache = await SecureStorageUtil().getFromStorage(recipeKey);
 
-      if (ingredientsCache != null && instructionsCache != null) {
+      if (recipeCache != null) {
+        var jsonRecipe = json.decode(recipeCache);
+
         return Right({
-          'ingredients': ingredientsCache,
-          'instructions': instructionsCache,
+          'ingredients': jsonRecipe['ingredients'],
+          'instructions': jsonRecipe['instructions'],
         });
       }
 
@@ -88,15 +87,20 @@ class DishRepositoryImpl implements DishRepository {
       ),
     );
 
-    SecureStorageUtil()
-        .saveToStorage('${selectedDish.dishName}.ingredients', ingredientText);
-    SecureStorageUtil().saveToStorage(
-        '${selectedDish.dishName}.instructions', instructionText);
+    // SecureStorageUtil()
+    //     .saveToStorage('${selectedDish.dishName}.ingredients', ingredientText);
+    // SecureStorageUtil().saveToStorage(
+    //     '${selectedDish.dishName}.instructions', instructionText);
 
-    return {
+    var recipeObject = {
       "ingredients": ingredientText,
       "instructions": instructionText,
     };
+
+    SecureStorageUtil().saveToStorage(
+        '${selectedDish.dishName}.recipe', json.encode(recipeObject));
+
+    return json.decode(json.encode(recipeObject));
   }
 
   String formatRecipe(String text) {

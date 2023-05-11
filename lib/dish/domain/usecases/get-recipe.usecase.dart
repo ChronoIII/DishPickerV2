@@ -7,6 +7,6 @@ class GetRecipe {
   GetRecipe(this._repository);
 
   call(DishEntity selectedDish) {
-    _repository.getRecipe(selectedDish);
+    return _repository.getRecipe(selectedDish);
   }
 }
