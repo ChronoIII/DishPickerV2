@@ -29,7 +29,7 @@ class _RecipePageState extends ConsumerState<RecipePage> {
 
   @override
   Widget build(BuildContext context) {
-    final selectedDish = ref.watch(selectedDishProvider);
+    final viewDish = ref.watch(viewDishProvider);
     final selectedRecipe = ref.watch(selectedRecipeProvider);
 
     return selectedRecipe.when(
@@ -91,7 +91,7 @@ class _RecipePageState extends ConsumerState<RecipePage> {
                 ),
                 Center(
                   child: Text(
-                    selectedDish!.dishName.capitalize(),
+                    viewDish != null ? viewDish.dishName.capitalize() : '',
                     style: const TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,

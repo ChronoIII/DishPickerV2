@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class DishListTileWidget extends StatelessWidget {
+import '../../domain/entities/dish.entity.dart';
+import '../providers/dish.provider.dart';
+
+class DishListTileWidget extends ConsumerWidget {
   const DishListTileWidget({
     super.key,
+    required this.dish,
     required this.cardIcon,
     required this.cardTitle,
     required this.cardSubtitle,
   });
 
+  final DishEntity dish;
   final IconData cardIcon;
   final String cardTitle;
   final String cardSubtitle;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(
         horizontal: 20.0,
@@ -43,7 +50,7 @@ class DishListTileWidget extends StatelessWidget {
       ),
       subtitle: Row(
         children: <Widget>[
-          Icon(
+          const Icon(
             Icons.bakery_dining,
             // color: Colors.yellowAccent,
           ),
@@ -53,10 +60,14 @@ class DishListTileWidget extends StatelessWidget {
           )
         ],
       ),
-      trailing: const Icon(
-        Icons.keyboard_arrow_right,
+      trailing: IconButton(
+        icon: const Icon(Icons.keyboard_arrow_right),
         // color: Colors.white,
-        size: 30.0,
+        iconSize: 30.0,
+        onPressed: () {
+          ref.watch(viewDishProvider.notifier).state = dish;
+          context.push('/recipe');
+        },
       ),
     );
   }

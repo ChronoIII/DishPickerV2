@@ -36,9 +36,7 @@ class HomeSelectedWidget extends ConsumerWidget {
         TextButton(
           child: const Text('Check for the Recipe'),
           onPressed: () {
-            // await dishController.getCuisineRecipe().then(
-            //       (value) => parentContext.push('/recipe'),
-            //     );
+            ref.watch(viewDishProvider.notifier).state = selectedDish;
             context.push('/recipe');
           },
         ),

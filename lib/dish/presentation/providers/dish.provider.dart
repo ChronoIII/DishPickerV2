@@ -16,12 +16,15 @@ final loadingRecipeProvider = StateProvider<bool>((ref) => false);
 
 final listDishProvider = StateProvider<List<DishEntity>>((ref) => []);
 
+final viewDishProvider = StateProvider<DishEntity?>((ref) => null);
+
 final selectedDishProvider = StateProvider<DishEntity?>((ref) => null);
 
 final selectedRecipeProvider = FutureProvider<dynamic>((ref) async {
-  final selectedDish = ref.watch(selectedDishProvider);
+  final viewDish = ref.watch(viewDishProvider);
+
   GetRecipe getRecipe = GetRecipe(ref.read(dishRepositoryProvider));
-  Either<FailureException, dynamic> response = await getRecipe(selectedDish!);
+  Either<FailureException, dynamic> response = await getRecipe(viewDish!);
 
   return response.fold(
     (left) {

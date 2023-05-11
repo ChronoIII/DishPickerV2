@@ -44,6 +44,7 @@ class _ListPageState extends ConsumerState<ListPage> {
         itemCount: listOfDish.length,
         itemBuilder: (context, index) {
           return DishCardWidget(
+            dish: listOfDish[index],
             cardIcon: Icons.wine_bar_rounded,
             cardTitle: listOfDish[index].dishName.capitalize(),
             cardSubtitle: listOfDish[index].dishLocation ?? '- - -',
