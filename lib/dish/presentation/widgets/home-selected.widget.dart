@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../core/extensions/text.extension.dart';
@@ -8,10 +7,7 @@ import '../../presentation/providers/dish.provider.dart';
 class HomeSelectedWidget extends ConsumerWidget {
   const HomeSelectedWidget({
     super.key,
-    required this.parentContext,
   });
-
-  final BuildContext parentContext;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -37,7 +33,7 @@ class HomeSelectedWidget extends ConsumerWidget {
           child: const Text('Check for the Recipe'),
           onPressed: () {
             ref.watch(viewDishProvider.notifier).state = selectedDish;
-            context.push('/recipe');
+            ref.watch(selectedTabmenuProvider.notifier).state = 1;
           },
         ),
         const SizedBox(height: 15.0),

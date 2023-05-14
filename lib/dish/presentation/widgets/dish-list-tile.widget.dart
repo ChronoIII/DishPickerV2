@@ -66,7 +66,8 @@ class DishListTileWidget extends ConsumerWidget {
         iconSize: 30.0,
         onPressed: () {
           ref.watch(viewDishProvider.notifier).state = dish;
-          context.push('/recipe');
+          ref.watch(selectedTabmenuProvider.notifier).state = 1;
+          // context.push('/recipe');
         },
       ),
     );

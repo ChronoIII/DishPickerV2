@@ -40,6 +40,7 @@ class _RecipePageState extends ConsumerState<RecipePage> {
       ),
       loading: () {
         return MainPageLayout(
+          disableTabmenu: true,
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           contents: [
@@ -48,65 +49,87 @@ class _RecipePageState extends ConsumerState<RecipePage> {
         );
       },
       data: (data) {
+        var test = divideIngredients(data != null ? data['ingredients'] : null);
+
         return ScrollablePageLayout(
-          bottomTabmenu: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[
-              BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.shopping_basket_outlined,
-                ),
-                label: 'Ingredients',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.collections_bookmark_rounded,
-                ),
-                label: 'Instructions',
-              ),
-            ],
-            currentIndex: _selectedIndex,
-            onTap: (index) {
-              setState(() {
-                _selectedIndex = index;
-              });
-            },
-          ),
+          // bottomTabmenu: BottomNavigationBar(
+          //   items: const <BottomNavigationBarItem>[
+          //     BottomNavigationBarItem(
+          //       icon: Icon(
+          //         Icons.shopping_basket_outlined,
+          //       ),
+          //       label: 'Ingredients',
+          //     ),
+          //     BottomNavigationBarItem(
+          //       icon: Icon(
+          //         Icons.collections_bookmark_rounded,
+          //       ),
+          //       label: 'Instructions',
+          //     ),
+          //   ],
+          //   currentIndex: _selectedIndex,
+          //   onTap: (index) {
+          //     setState(() {
+          //       _selectedIndex = index;
+          //     });
+          //   },
+          // ),
           contents: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.sync_outlined,
-                        size: 30.0,
-                        color: Colors.teal,
+            if (data == null)
+              const Center(child: Text('No dish selected.'))
+            else
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.end,
+                  //   children: [
+                  //     IconButton(
+                  //       onPressed: () {},
+                  //       icon: const Icon(
+                  //         Icons.sync_outlined,
+                  //         size: 30.0,
+                  //         color: Colors.teal,
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                  Center(
+                    child: Text(
+                      viewDish != null ? viewDish.dishName.capitalize() : '',
+                      style: const TextStyle(
+                        fontSize: 20.0,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                  ],
-                ),
-                Center(
-                  child: Text(
-                    viewDish != null ? viewDish.dishName.capitalize() : '',
-                    style: const TextStyle(
-                      fontSize: 20.0,
-                      fontWeight: FontWeight.bold,
-                    ),
                   ),
-                ),
-                if (_selectedIndex == 0)
-                  Text(data['ingredients'] ?? '')
-                else if (_selectedIndex == 1)
-                  Text(data['instructions'] ?? '')
-              ],
-            )
+                  const SizedBox(height: 20.0),
+                  if (_selectedIndex == 0)
+                    // Text(data['ingredients'] ?? '')
+                    for (var i in test)
+                      Row(
+                        children: [
+                          Checkbox(value: false, onChanged: (value) {}),
+                          Text(i.group(0) ?? '')
+                        ],
+                      )
+                  else if (_selectedIndex == 1)
+                    Text(data['instructions'] ?? '')
+                ],
+              )
           ],
         );
       },
     );
   }
+}
+
+List<Match> divideIngredients(String? ingredients) {
+  if (ingredients == null) {
+    return [];
+  }
+  return RegExp('^(?:- ?)(.+)\$', multiLine: true, caseSensitive: false)
+      .allMatches(ingredients)
+      .toList();
 }

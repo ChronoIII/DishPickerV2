@@ -87,11 +87,6 @@ class DishRepositoryImpl implements DishRepository {
       ),
     );
 
-    // SecureStorageUtil()
-    //     .saveToStorage('${selectedDish.dishName}.ingredients', ingredientText);
-    // SecureStorageUtil().saveToStorage(
-    //     '${selectedDish.dishName}.instructions', instructionText);
-
     var recipeObject = {
       "ingredients": ingredientText,
       "instructions": instructionText,

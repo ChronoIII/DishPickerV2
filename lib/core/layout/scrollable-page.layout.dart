@@ -10,6 +10,7 @@ class ScrollablePageLayout extends StatelessWidget {
     this.crossAxisAlignment,
     this.actionButtons,
     this.bottomTabmenu,
+    this.disableTabmenu,
   });
 
   final List<Widget> contents;
@@ -18,10 +19,12 @@ class ScrollablePageLayout extends StatelessWidget {
   final CrossAxisAlignment? crossAxisAlignment;
   final List<Widget>? actionButtons;
   final BottomNavigationBar? bottomTabmenu;
+  final bool? disableTabmenu;
 
   @override
   Widget build(BuildContext context) {
     return BasePageLayout(
+      disableTabmenu: disableTabmenu,
       containerPadding: containerPadding,
       actionButtons: actionButtons,
       bottomTabmenu: bottomTabmenu,

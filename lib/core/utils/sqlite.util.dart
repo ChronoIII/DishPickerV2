@@ -1,0 +1,3 @@
+class SqliteUtil {
+  SqliteUtil();
+}

@@ -27,7 +27,7 @@ class DishController {
   Future<void> randomizeDish() async {
     ref.watch(selectedDishProvider.notifier).state = null;
 
-    await Future.delayed(const Duration(seconds: 5));
+    await Future.delayed(const Duration(seconds: 2));
 
     var response = await _randomizeDish();
     response.fold(

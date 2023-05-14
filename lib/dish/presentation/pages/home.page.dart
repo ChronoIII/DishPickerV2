@@ -41,62 +41,59 @@ class _HomePageState extends ConsumerState<HomePage>
   @override
   Widget build(BuildContext context) {
     final isDishLoading = ref.watch(loadingDishProvider);
-    final isRecipeLoading = ref.watch(loadingRecipeProvider);
     final dishController = ref.read(dishControllerProvider);
     final selectedDish = ref.watch(selectedDishProvider);
 
     return MainPageLayout(
+      disableTabmenu: isDishLoading,
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
-      actionButtons: [
-        IconButton(
-          onPressed: () {
-            context.push('/list');
-          },
-          icon: const Icon(Icons.menu_book_outlined),
-        ),
-      ],
+      // actionButtons: [
+      //   IconButton(
+      //     onPressed: () {
+      //       context.push('/list');
+      //     },
+      //     icon: const Icon(Icons.menu_book_outlined),
+      //   ),
+      // ],
       contents: <Widget>[
-        if (isRecipeLoading == true)
-          AssetUtil.getImage('book.gif', scaleMulitplier: 2)
-        else
-          InkWell(
-            child: Container(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                children: [
-                  RotationTransition(
-                    turns: Tween(begin: 0.0, end: 1.0)
-                        .animate(animationController),
-                    child: AssetUtil.getImage(
-                      'meal.png',
-                      scaleMulitplier: _scaleMulitplier,
-                    ),
+        InkWell(
+          child: Container(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                RotationTransition(
+                  turns:
+                      Tween(begin: 0.0, end: 1.0).animate(animationController),
+                  child: AssetUtil.getImage(
+                    'meal.png',
+                    scaleMulitplier: _scaleMulitplier,
                   ),
-                  if (isDishLoading == false)
-                    if (selectedDish == null)
-                      const HomeDefaultWidget()
-                    else
-                      HomeSelectedWidget(parentContext: context)
-                ],
-              ),
+                ),
+                if (isDishLoading == false)
+                  if (selectedDish == null)
+                    const HomeDefaultWidget()
+                  else
+                    const HomeSelectedWidget()
+              ],
             ),
-            onTap: () {
-              ref.watch(loadingDishProvider.notifier).state = true;
-              animationController.repeat();
-              setState(() {
-                _scaleMulitplier = 2;
-              });
-
-              dishController.randomizeDish().then((value) {
-                ref.watch(loadingDishProvider.notifier).state = false;
-                animationController.reset();
-                setState(() {
-                  _scaleMulitplier = 1;
-                });
-              });
-            },
           ),
+          onTap: () {
+            ref.watch(loadingDishProvider.notifier).state = true;
+            animationController.repeat();
+            setState(() {
+              _scaleMulitplier = 2;
+            });
+
+            dishController.randomizeDish().then((value) {
+              ref.watch(loadingDishProvider.notifier).state = false;
+              animationController.reset();
+              setState(() {
+                _scaleMulitplier = 1;
+              });
+            });
+          },
+        )
       ],
     );
   }
