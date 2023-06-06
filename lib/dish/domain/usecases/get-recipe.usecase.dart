@@ -1,8 +1,8 @@
 import '../../domain/entities/dish.entity.dart';
-import '../repositories/dish.repository.dart';
+import '../repositories/recipe.repository.dart';
 
 class GetRecipe {
-  final DishRepository _repository;
+  final RecipeRepository _repository;
 
   GetRecipe(this._repository);
 

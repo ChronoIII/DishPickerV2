@@ -9,12 +9,14 @@ class BasePageLayout extends StatelessWidget {
     this.actionButtons,
     this.bottomTabmenu,
     this.containerPadding,
+    this.floatingActionButton,
   });
 
   final Widget body;
   final List<Widget>? actionButtons;
   final BottomNavigationBar? bottomTabmenu;
   final double? containerPadding;
+  final FloatingActionButton? floatingActionButton;
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +29,7 @@ class BasePageLayout extends StatelessWidget {
         child: body,
       ),
       bottomNavigationBar: bottomTabmenu,
+      floatingActionButton: floatingActionButton,
     );
   }
 }

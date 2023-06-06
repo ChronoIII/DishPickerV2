@@ -4,9 +4,11 @@ import 'package:dartz/dartz.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../data/repositories/dish.repository-impl.dart';
+import '../../data/repositories/recipe.repository-impl.dart';
 import '../../domain/entities/dish.entity.dart';
 import '../../domain/repositories/dish.repository.dart';
 import '../../../core/exceptions/failure.exception.dart';
+import '../../domain/repositories/recipe.repository.dart';
 import '../../domain/usecases/get-recipe.usecase.dart';
 import '../../presentation/controller/dish.controller.dart';
 
@@ -18,20 +20,22 @@ final listDishProvider = StateProvider<List<DishEntity>>((ref) => []);
 
 final selectedDishProvider = StateProvider<DishEntity?>((ref) => null);
 
-final selectedRecipeProvider = FutureProvider<dynamic>((ref) async {
-  final selectedDish = ref.watch(selectedDishProvider);
-  GetRecipe getRecipe = GetRecipe(ref.read(dishRepositoryProvider));
-  Either<FailureException, dynamic> response = await getRecipe(selectedDish!);
+final selectedRecipeProvider = FutureProvider<dynamic>(
+  (ref) async {
+    final selectedDish = ref.watch(selectedDishProvider);
+    GetRecipe getRecipe = GetRecipe(ref.read(recipeRepositoryProvider));
+    Either<FailureException, dynamic> response = await getRecipe(selectedDish!);
 
-  return response.fold(
-    (left) {
-      throw Exception(left.message);
-    },
-    (right) {
-      return right;
-    },
-  );
-});
+    return response.fold(
+      (left) {
+        throw Exception(left.message);
+      },
+      (right) {
+        return right;
+      },
+    );
+  },
+);
 
 final selectedIngredientsProvider = StateProvider<String?>((ref) => null);
 
@@ -42,3 +46,6 @@ final dishControllerProvider =
 
 final dishRepositoryProvider =
     StateProvider<DishRepository>((ref) => DishRepositoryImpl());
+
+final recipeRepositoryProvider =
+    StateProvider<RecipeRepository>((ref) => RecipeRepositoryImpl());

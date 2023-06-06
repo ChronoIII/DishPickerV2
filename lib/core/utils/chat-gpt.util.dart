@@ -1,12 +1,16 @@
 import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 import 'package:chat_gpt_sdk/src/model/complete_text/response/choices.dart';
+import 'package:flutter/material.dart';
 
 import '../values/app.values.dart';
 
 class ChatGptUtil {
   final OpenAI _instance = OpenAI.instance.build(
     token: openAiToken,
-    baseOption: HttpSetup(receiveTimeout: const Duration(seconds: 5)),
+    baseOption: HttpSetup(
+      connectTimeout: const Duration(seconds: 10),
+      receiveTimeout: const Duration(seconds: 30),
+    ),
   );
 
   ChatGptUtil();
@@ -18,10 +22,13 @@ class ChatGptUtil {
         model: Model.textDavinci3,
         maxTokens: 200,
       );
-      final response = await _instance.onCompletion(request: request);
+      final response =
+          await _instance.onCompletion(request: request).catchError((err) {
+        return null;
+      });
       return response!.choices.first;
     } catch (e) {
-      print(e);
+      print('chatgpt error: ' + e.toString());
     }
     return null;
   }

@@ -76,19 +76,6 @@ class _RecipePageState extends ConsumerState<RecipePage> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.sync_outlined,
-                        size: 30.0,
-                        color: Colors.teal,
-                      ),
-                    ),
-                  ],
-                ),
                 Center(
                   child: Text(
                     selectedDish!.dishName.capitalize(),

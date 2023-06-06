@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../core/layout/base-page.layout.dart';
 
@@ -11,6 +12,7 @@ class MainPageLayout extends StatelessWidget {
     this.crossAxisAlignment,
     this.actionButtons,
     this.bottomTabmenu,
+    this.floatingActionButton,
   });
 
   final List<Widget> contents;
@@ -19,10 +21,12 @@ class MainPageLayout extends StatelessWidget {
   final CrossAxisAlignment? crossAxisAlignment;
   final List<Widget>? actionButtons;
   final BottomNavigationBar? bottomTabmenu;
+  final FloatingActionButton? floatingActionButton;
 
   @override
   Widget build(BuildContext context) {
     return BasePageLayout(
+      floatingActionButton: floatingActionButton,
       containerPadding: containerPadding,
       actionButtons: actionButtons,
       bottomTabmenu: bottomTabmenu,

@@ -1,16 +1,18 @@
 import 'package:dishv3/dish/presentation/widgets/dish-list-tile.widget.dart';
 import 'package:flutter/material.dart';
 
+import '../../domain/entities/dish.entity.dart';
+
 class DishCardWidget extends StatelessWidget {
   const DishCardWidget({
     super.key,
-    required this.cardIcon,
-    required this.cardTitle,
+    required this.dishIcon,
+    required this.dishData,
     this.cardSubtitle,
   });
 
-  final IconData cardIcon;
-  final String cardTitle;
+  final IconData dishIcon;
+  final DishEntity dishData;
   final String? cardSubtitle;
 
   @override
@@ -22,9 +24,9 @@ class DishCardWidget extends StatelessWidget {
         // decoration:
         //     const BoxDecoration(color: Color.fromRGBO(238, 238, 238, 0.894)),
         child: DishListTileWidget(
-          cardIcon: cardIcon,
-          cardTitle: cardTitle,
-          cardSubtitle: cardSubtitle ?? '',
+          dishIcon: dishIcon,
+          dishData: dishData,
+          cardSubtitle: cardSubtitle ?? '- - -',
         ),
       ),
     );

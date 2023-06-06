@@ -1,3 +1,4 @@
+import 'package:dishv3/core/utils/dio.util.dart';
 import 'package:dishv3/dish/presentation/widgets/home-default.widget.dart';
 import 'package:dishv3/dish/presentation/widgets/home-selected.widget.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class _HomePageState extends ConsumerState<HomePage>
   late AnimationController animationController;
   late AnimationController scaleController;
   var _scaleMulitplier = 1;
+  var dio = DioUtil();
 
   @override
   void initState() {

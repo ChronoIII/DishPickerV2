@@ -1,87 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../core/utils/asset.util.dart';
-import '../../domain/entities/dish.entity.dart';
-import '../providers/dish.provider.dart';
 
-class DishListTileWidget extends ConsumerWidget {
-  const DishListTileWidget({
-    super.key,
-    required this.dishIcon,
-    required this.dishData,
-    required this.cardSubtitle,
-  });
-
-  final IconData dishIcon;
-  final DishEntity dishData;
-  final String cardSubtitle;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final dishController = ref.read(dishControllerProvider);
-    final int dishId = dishData.dishId ?? 0;
-    final String dishTitle = dishData.dishName;
-
-    return ListTile(
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: 20.0,
-        vertical: 10.0,
-      ),
-      leading: Container(
-        padding: const EdgeInsets.only(right: 12.0),
-        decoration: const BoxDecoration(
-          border: Border(
-            right: BorderSide(
-              width: 1.0,
-            ),
-          ),
-        ),
-        child: const Icon(
-          Icons.wine_bar,
-        ),
-      ),
-      title: Text(
-        dishTitle,
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      subtitle: Row(
-        children: <Widget>[
-          const Icon(
-            Icons.bakery_dining,
-          ),
-          Text(
-            " $cardSubtitle",
-          )
-        ],
-      ),
-      trailing: TextButton(
-        child: const Icon(
-          Icons.keyboard_arrow_right,
-          size: 30.0,
-        ),
-        onPressed: () {
-          showMenu(
-            context,
-            dishData,
-            viewRecipe: () {
-              ref.watch(selectedDishProvider.notifier).state = dishData;
-              context.push('/recipe');
-            },
-            onDelete: () {
-              dishController.deleteDish(dishId);
-            },
-          );
-        },
-      ),
-    );
-  }
-}
-
-showMenu(context, dish, {viewRecipe, onDelete}) {
+showMenu(context, dishName) {
   showModalBottomSheet(
     backgroundColor: Colors.transparent,
     context: context,
@@ -115,7 +36,7 @@ showMenu(context, dish, {viewRecipe, onDelete}) {
               const SizedBox(
                 height: 50.0,
               ),
-              Text(dish.dishName),
+              Text(dishName),
               const SizedBox(
                 height: 10.0,
               ),
@@ -134,7 +55,7 @@ showMenu(context, dish, {viewRecipe, onDelete}) {
                         fontSize: 10.0,
                       ),
                     ),
-                    onPressed: viewRecipe,
+                    onPressed: () {},
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.black87,
                       padding: const EdgeInsets.symmetric(
@@ -162,7 +83,7 @@ showMenu(context, dish, {viewRecipe, onDelete}) {
                         color: Colors.red,
                       ),
                     ),
-                    onPressed: onDelete,
+                    onPressed: () {},
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.white,
                       side: const BorderSide(

@@ -12,11 +12,17 @@ class AppBarCoreWidget extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text(appTitle),
+      title: const Text(
+        appTitle,
+        style: TextStyle(
+          fontSize: 12.0,
+        ),
+      ),
       actions: actions,
+      backgroundColor: Colors.black87,
     );
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(50);
+  Size get preferredSize => const Size.fromHeight(60);
 }

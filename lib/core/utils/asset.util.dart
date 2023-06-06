@@ -8,7 +8,7 @@ class AssetUtil {
   AssetUtil();
 
   static Image getImage(String filename, {int scaleMulitplier = 1}) {
-    var fullPath = '$imageAssetPath/$filename';
+    var fullPath = '$imageFullPath/$filename';
     return Image.asset(
       fullPath,
       scale: 1.0 / scaleMulitplier,
@@ -16,7 +16,7 @@ class AssetUtil {
   }
 
   static Future<List<dynamic>> getJson(String filename) async {
-    var fullPath = '$jsonAssetPath/$filename';
+    var fullPath = '$jsonFullPath/$filename';
     var data = await rootBundle.loadString(fullPath);
     return json.decode(data);
   }
