@@ -1,12 +1,10 @@
-import 'package:dishv3/core/extensions/text.extension.dart';
-import 'package:dishv3/core/widgets/textbox.widget.dart';
-import 'package:dishv3/dish/presentation/widgets/dish-list.widget.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../../presentation/widgets/dish-list.widget.dart';
+import '../../../core/widgets/textbox.widget.dart';
 import '../../../core/layout/base-page.layout.dart';
 import '../../domain/entities/dish.entity.dart';
-import '../../presentation/widgets/dish-card.widget.dart';
 import '../../presentation/providers/dish.provider.dart';
 import '../controller/dish.controller.dart';
 
